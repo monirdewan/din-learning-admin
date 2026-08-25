@@ -16,6 +16,11 @@ import {
   LogOut,
   Menu,
   X,
+  Settings,
+  UserMinus,
+  CalendarDays,
+  Award,
+  ClipboardCheck,
 } from 'lucide-react';
 import { getUser, logout } from '@/lib/api';
 
@@ -24,25 +29,37 @@ const navItems = [
   { href: '/users', label: 'Users', icon: Users },
   { href: '/teachers', label: 'Teachers', icon: GraduationCap },
   { href: '/students', label: 'Students', icon: UserCheck },
+  { href: '/admission-sessions', label: 'Admission Sessions', icon: CalendarDays },
+  { href: '/admissions', label: 'Admissions', icon: ClipboardCheck },
+  { href: '/courses', label: 'Courses', icon: BookOpen },
   { href: '/applications', label: 'Applications', icon: BookOpen },
+  { href: '/removal-requests', label: 'Removal Requests', icon: UserMinus },
+  { href: '/inactivation-requests', label: 'Inactivation', icon: UserMinus },
   { href: '/classes', label: 'Classes', icon: BookOpen },
   { href: '/live-classes', label: 'Live Classes', icon: Video },
   { href: '/notifications', label: 'Notifications', icon: Bell },
+  { href: '/certificates', label: 'Certificates', icon: Award },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
   { href: '/audit-logs', label: 'Audit Logs', icon: FileText },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const user = getUser();
+  const [mounted, setMounted] = useState(false);
+  const user = mounted ? getUser() : null;
 
   useEffect(() => {
-    if (!user) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !user) {
       router.push('/');
     }
-  }, [user, router]);
+  }, [mounted, user, router]);
 
   const handleLogout = () => {
     logout();

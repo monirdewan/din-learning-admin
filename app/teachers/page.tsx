@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import { api } from '@/lib/api';
 
@@ -134,6 +135,9 @@ export default function TeachersPage() {
                         Unblock
                       </button>
                     )}
+                    <Link href={`/teachers/${t.id}/groups`} className="ml-2 inline-block rounded-md border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50">
+                      Group Links
+                    </Link>
                   </td>
                 </tr>
               ))}
